@@ -9,7 +9,7 @@ import { LeftOutlined   } from '@ant-design/icons';
 const { Footer } = Layout;
 export const StyledContainer = styled.div`
   margin: 20px 0;
-  min-width: 428px;
+  min-width: 358px;
 `;
 
 const StyledDiv = styled.div`
