@@ -1,0 +1,48 @@
+.ptr, .ptr__children {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+.ptr.ptr--fetch-more-treshold-breached .ptr__fetch-more {
+    display: block;
+}
+.ptr__fetch-more {
+    display: none;
+}
+/** * Pull down transition */
+.ptr__children, .ptr__pull-down {
+    transition: transform 0.2s cubic-bezier(0, 0, 0.31, 1);
+}
+.ptr__pull-down {
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+}
+.ptr__pull-down > div {
+    display: none;
+}
+
+.ptr--dragging.ptr--pull-down-treshold-breached .ptr__pull-down--pull-more {
+    display: none;
+}
+.ptr--dragging .ptr__pull-down--pull-more {
+    display: block;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.ptr--pull-down-treshold-breached .ptr__pull-down {
+    opacity: 1 !important;
+}
+.ptr--pull-down-treshold-breached .ptr__pull-down--loading {
+    display: block;
+}
+.ptr__loader {
+    margin: 15px auto;
+    text-align: center;
+}
