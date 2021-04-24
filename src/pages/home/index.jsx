@@ -89,7 +89,7 @@ export default class Home extends Component {
     super(props, context);
     this.state = {
       reset: false,
-      places: ['Better luck next time!', '2X Savings', '₹100 Cashback', '₹20 💸', '₹50 💸', '1.5X Savings', '2X Savings', '₹50 💸']
+      places: ['Better luck!', '2X Savings', '₹100 Cashback', '₹20 💸', '₹50 💸', '1.5X Savings', '2X Savings', '₹50 💸']
     };
   }
 

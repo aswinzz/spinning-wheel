@@ -30,11 +30,7 @@ export default class Wheel extends React.Component {
       }
       this.setState({ selectedItem });
       if (selectedItem) {
-        this.appendSpreadsheet({web_client: 'PWA', timestamp: new Date(), spin_result_index: selectedItem}).then(() => {
-            console.log('Data Saved');
-        }, () => {
-            console.log('Something went wrong');
-        })
+        this.appendSpreadsheet({web_client: 'PWA', timestamp: new Date(), spin_result_index: selectedItem});
       }
     } else {
       this.setState({ selectedItem: null });
@@ -50,6 +46,7 @@ export default class Wheel extends React.Component {
   
       const sheet = this.doc.sheetsById[0];
       const result = await sheet.addRow(row);
+      console.log('Data Saved')
     } catch (e) {
       console.error('Error: ', e);
     }
@@ -78,9 +75,12 @@ export default class Wheel extends React.Component {
         <div className="pointer"></div>
         <div className={`wheel ${spinning}`} style={wheelVars}>
           {items.map((item, index) => (
+            <>
             <div className="wheel-item" key={index} style={{ '--item-nb': index }}>
+              <div className="wheel-item-dot"></div>
               {item}
             </div>
+            </>
           ))}
         </div>
 

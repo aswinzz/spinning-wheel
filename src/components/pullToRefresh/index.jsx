@@ -36,7 +36,6 @@ export default (props)  => {
   }, []);
 
   const initContainer = () => {
-    console.log('init');
     requestAnimationFrame(() => {
       if (childrenRef && childrenRef.current) {
         childrenRef.current.style.overflowX = 'hidden';

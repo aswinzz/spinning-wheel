@@ -152,3 +152,37 @@
     border-right: solid var(--neutral-color) calc(var(--wheel-size) / 2);
   }
   
+  .wheel-item:after {
+    content: ' ';
+    display: block;
+
+    position: absolute;
+    width: 7.48px;
+    height: 7.48px;
+    border-radius: 50%;
+    /* left: 193.68px;
+    top: 355.85px; */
+    top: -185%;
+    left: 90%;
+
+    background: #FFDDA1;
+    transform: rotate(-9.4deg);
+  }
+
+  .wheel-item-dot {
+    content: ' ';
+    display: block;
+
+    position: absolute;
+    width: 7.48px;
+    height: 7.48px;
+    border-radius: 50%;
+    /* left: 193.68px;
+    top: 355.85px; */
+    top: 259%;
+    left: 89%;
+
+    background: #FFDDA1;
+    transform: rotate(-9.4deg);
+  }
+  
