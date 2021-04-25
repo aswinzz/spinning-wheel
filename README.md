@@ -46,4 +46,8 @@ Follow these steps to obtain the service account email and private key:
 - click "DONE"
 - both email and private key will be present in the downloaded JSON file
 
+### Known issues
+- The drag and rotate feature is not completely working, the position on drag is coming incorrectly
+- Animations needs to be improved
+
 Application is live at [https://aswinvb.com/spinning-wheel](https://aswinvb.com/spinning-wheel)
