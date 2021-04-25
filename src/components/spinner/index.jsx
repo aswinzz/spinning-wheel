@@ -16,6 +16,12 @@ export default class Wheel extends React.Component {
   }
 
   async componentDidMount() {
+    this.powerRef.current.addEventListener('touchstart', this.eventHandler, { passive: true });
+    // this.powerRef.current.addEventListener('mousedown', this.eventHandler);
+    this.powerRef.current.addEventListener('touchmove', this.eventHandler, { passive: false });
+    // this.powerRef.current.addEventListener('mousemove', this.eventHandler);
+    this.powerRef.current.addEventListener('touchend', this.eventHandler);
+    // this.powerRef.current.addEventListener('mouseup', this.eventHandler);
     this.doc = new GoogleSpreadsheet(process.env.REACT_APP_SPREADSHEET_ID);
     await this.doc.useServiceAccountAuth({
         client_email: process.env.REACT_APP_GAPI_EMAIL,
@@ -23,6 +29,19 @@ export default class Wheel extends React.Component {
     });
     await this.doc.loadInfo();
     console.log(this.doc.title);
+  }
+
+  componentWillUnmount() {
+    this.powerRef.current.removeEventListener('touchstart', this.eventHandler);
+    // this.powerRef.current.removeEventListener('mousedown', this.eventHandler);
+    this.powerRef.current.removeEventListener('touchmove', this.eventHandler);
+    // this.powerRef.current.removeEventListener('mousemove', this.eventHandler);
+    this.powerRef.current.removeEventListener('touchend', this.eventHandler);
+    // this.powerRef.current.removeEventListener('mouseup', this.eventHandler);
+  }
+
+  eventHandler = (e) => {
+      e.stopPropagation();
   }
 
   selectItem() {
@@ -70,7 +89,7 @@ export default class Wheel extends React.Component {
     const rect = this.powerRef.current.getBoundingClientRect();
     const max = rect.left + rect.width;
     const percantage = ((this.state.x - rect.left) / (max - rect.left)) * 100;
-    this.setState({speed: percantage}, () => {
+    this.setState({speed: Math.floor(percantage)}, () => {
         if (this.state.speed > 20) {
             this.selectItem();
         }
@@ -85,10 +104,10 @@ export default class Wheel extends React.Component {
       '--nb-item': items.length,
       '--selected-item': selectedItem,
       '--spinning-duration': `${(150 - this.state.speed)/10}s`,
-      '--nb-turn': `${(this.state.speed + 50)/10}`
+      '--nb-turn': `${Math.floor((this.state.speed + 50)/10)}`
     };
     const spinning = selectedItem !== null ? 'spinning' : '';
-
+    
     return (
     <div>
       <div className="wheel-container">
