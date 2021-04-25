@@ -33,6 +33,7 @@ export default class Wheel extends React.Component {
             }
         });
       }
+      e.stopPropagation();
   }
 
   onTouchMove = (e) => {
@@ -45,6 +46,7 @@ export default class Wheel extends React.Component {
       if (this.dragRef && this.dragRef.current && this.dragRef.current.data && this.dragRef.current.data.isDragging && (this.state.tempSpeed + 0.4 >= 100 || this.state.tempSpeed >= 100)) {
         this.onEnd(e);
       }
+      e.stopPropagation();
   }
 
   onEnd = (e) => {
@@ -56,6 +58,7 @@ export default class Wheel extends React.Component {
             isDragging: false,
         }
     }
+    e.stopPropagation();
   }
 
   async componentDidMount() {
