@@ -13,6 +13,13 @@ Spin a wheel with different prices to randomly select an item
 - The randomly obtained item will be recorded in a google sheet with timestamp and the selected item index.
 - Loading and error states have been handled
 
+### How to run locally
+- clone this repo
+- create an ```.env``` file and add the corresponding google sheets API keys (check .env.example file for reference)
+- run ```npm i```
+- run ```npm run start```
+- application will open at port 3000
+
 ### API for getting data
 - Endpoint : https://60852621d14a87001757772d.mockapi.io/api/v1/get-spinner-data
 - Method : GET
