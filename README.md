@@ -20,6 +20,8 @@ Spin a wheel with different prices to randomly select an item
 - run ```npm run start```
 - application will open at port 3000
 
+### Note
+- Commits with message ```updates``` are for the build that gets pushed to gh-pages branch for deployment, it can be ignored 
 ### API for getting data
 - ```Endpoint``` : https://60852621d14a87001757772d.mockapi.io/api/v1/get-spinner-data
 - ```Method``` : ```GET```

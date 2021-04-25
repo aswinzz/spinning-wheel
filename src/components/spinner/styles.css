@@ -13,7 +13,7 @@
     --spinning-duration: 10s;
     --reset-duration: 0.25s;
     --drag-degree: 1;
-    --color: #832A4B
+    --wheel-itemcolor: #832A4B;
   }
   
   .wheel-container {
@@ -155,8 +155,8 @@
     --slice-max-width: calc(var(--PI) * var(--wheel-size) + var(--wheel-size) / 2);
     --slice-width: calc((var(--slice-max-width) / var(--nb-item, 1)) - var(--wheel-slice-spacing));
     border: solid transparent calc(var(--slice-width) / 2);
-    border-left: solid var(--color) 0;
-    border-right: solid var(--color) calc(var(--wheel-size) / 2);
+    border-left: solid var(--wheel-itemcolor) 0;
+    border-right: solid var(--wheel-itemcolor) calc(var(--wheel-size) / 2);
   }
   
   .wheel-item:after {

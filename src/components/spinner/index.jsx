@@ -201,7 +201,7 @@ export default class Wheel extends React.Component {
         <div ref={this.wheelRef} className={this.dragRef && this.dragRef.current && this.dragRef.current.data.isDragging ? `wheel spinning-drag`: `wheel ${spinning}`} style={this.dragRef && this.dragRef.current && this.dragRef.current.data.isDragging ?  {...wheelVars, ...dragVar} : wheelVars}>
           {items.map((item, index) => (
             <>
-            <div className="wheel-item" key={index} style={{ '--item-nb': index, '--color': this.getColor(index) }}>
+            <div className="wheel-item" key={index} style={{ '--item-nb': index, '--wheel-itemcolor': this.getColor(index) }}>
               <div className="wheel-item-dot"></div>
               {item}
             </div>
