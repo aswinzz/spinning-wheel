@@ -3,12 +3,15 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import './styles.css';
 
 export default class Wheel extends React.Component {
+  powerRef;
   constructor(props) {
     super(props);
     this.doc = null;
     this.state = {
       selectedItem: null,
+      speed: 15
     };
+    this.powerRef = React.createRef();
     this.selectItem = this.selectItem.bind(this);
   }
 
@@ -59,6 +62,21 @@ export default class Wheel extends React.Component {
       }
   }
 
+  _onMouseMove = (e) => {
+    this.setState({ x: e.pageX, y: e.pageY });
+  }
+
+  onPowerClick = () => {
+    const rect = this.powerRef.current.getBoundingClientRect();
+    const max = rect.left + rect.width;
+    const percantage = ((this.state.x - rect.left) / (max - rect.left)) * 100;
+    this.setState({speed: percantage}, () => {
+        if (this.state.speed > 20) {
+            this.selectItem();
+        }
+    });
+  }
+
   render() {
     const { selectedItem } = this.state;
     const { items } = this.props;
@@ -66,10 +84,13 @@ export default class Wheel extends React.Component {
     const wheelVars = {
       '--nb-item': items.length,
       '--selected-item': selectedItem,
+      '--spinning-duration': `${(150 - this.state.speed)/10}s`,
+      '--nb-turn': `${(this.state.speed + 50)/10}`
     };
     const spinning = selectedItem !== null ? 'spinning' : '';
 
     return (
+    <div>
       <div className="wheel-container">
         <div className="pointer-back"></div>
         <div className="pointer"></div>
@@ -85,6 +106,11 @@ export default class Wheel extends React.Component {
         </div>
 
         <div className='spin-button' onClick={this.selectItem}>Spin</div>
+      </div>
+      <div ref={this.powerRef} onClick={this.onPowerClick} onMouseMove={this._onMouseMove} style={{'--percentage': `${this.state.speed}%`}} className='speed-controller'>
+
+      </div>
+
       </div>
     );
   }

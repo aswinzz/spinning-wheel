@@ -10,7 +10,7 @@
     --item-nb: 0;
     --selected-item: 0;
     --nb-turn: 5;
-    --spinning-duration: 4s;
+    --spinning-duration: 10s;
     --reset-duration: 0.25s;
   }
   
@@ -186,3 +186,31 @@
     transform: rotate(-9.4deg);
   }
   
+
+  .speed-controller {
+    width:200px;
+    height:50px;
+    position:relative;
+    background-color: #BBBBBB;
+    margin: 40px auto;
+  }
+
+  .speed-controller:after {
+    content:'\A';
+    position:absolute;
+    background:linear-gradient(90deg, #E23A3A -5.09%, #DBD174 44.46%, #148E2F 87.58%);
+    top:0; bottom:0;
+    left:0; 
+    width: var(--percentage);
+  }
+
+  .speed-controller:before {
+    content: '\A';
+    position: absolute;
+    background: #000;
+    top: 0;
+    bottom: 0;
+    left: 38px;
+    width: 2px;
+    z-index: 10000;
+  }
