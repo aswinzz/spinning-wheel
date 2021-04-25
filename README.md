@@ -10,7 +10,7 @@ Spin a wheel with different prices to randomly select an item
 - Alternatively, the user can click on the power tab where depending on the selected power the spinner wheel will spin and selects a random item
 - Pull to refresh functionality is present to refresh the page without reloading.
 - The container width is fixed to mobile size, so in all window dimension the spinner wheel and other components will be of fixed size.
-- The randomly obtained item will be recorded in a google sheet with timestamp and the selected item index.
+- The randomly obtained item will be recorded in a google sheet with timestamp and the selected item index. ([Google Sheet Link](https://docs.google.com/spreadsheets/d/1BzxH-YuUAiGqKeJglHMyCWwXJR-L24aPDmepwYD7QBw/edit?usp=sharing))
 - Loading and error states have been handled
 
 ### How to run locally
