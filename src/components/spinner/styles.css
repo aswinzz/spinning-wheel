@@ -13,6 +13,7 @@
     --spinning-duration: 10s;
     --reset-duration: 0.25s;
     --drag-degree: 1;
+    --color: #832A4B
   }
   
   .wheel-container {
