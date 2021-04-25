@@ -21,15 +21,15 @@ Spin a wheel with different prices to randomly select an item
 - application will open at port 3000
 
 ### API for getting data
-- Endpoint : https://60852621d14a87001757772d.mockapi.io/api/v1/get-spinner-data
-- Method : GET
-- Response ["Better luck!","2X Savings","₹100 Cashback","₹20 💸","₹50 💸","1.5X Savings","2X Savings","₹50 💸"]
+- ```Endpoint``` : https://60852621d14a87001757772d.mockapi.io/api/v1/get-spinner-data
+- ```Method``` : ```GET```
+- ```Response```: ```["Better luck!","2X Savings","₹100 Cashback","₹20 💸","₹50 💸","1.5X Savings","2X Savings","₹50 💸"]```
 
 ### Google Sheets
 For this functionality to work there are 3 environment variables that needs to be added
-- REACT_APP_GAPI_EMAIL this key should contain the google service account email address
-- REACT_APP_SPREADSHEET_ID this key should contain the google sheets id which is present in the url of the sheet
-- REACT_APP_GAPI_KEY this is the google api private key that can be obtained from google console
+- ```REACT_APP_GAPI_EMAIL``` this key should contain the google service account email address
+- ```REACT_APP_SPREADSHEET_ID``` this key should contain the google sheets id which is present in the url of the sheet
+- ```REACT_APP_GAPI_KEY``` this is the google api private key that can be obtained from google console
 
 Follow these steps to obtain the service account email and private key:
 - Go to the [Google Developers Console](https://console.developers.google.com/)
