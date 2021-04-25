@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/spinning-wheel/static/css/main.4a391a75.chunk.css",
-    "main.js": "/spinning-wheel/static/js/main.6ba5eed3.chunk.js",
-    "main.js.map": "/spinning-wheel/static/js/main.6ba5eed3.chunk.js.map",
+    "main.js": "/spinning-wheel/static/js/main.fd3f2501.chunk.js",
+    "main.js.map": "/spinning-wheel/static/js/main.fd3f2501.chunk.js.map",
     "runtime-main.js": "/spinning-wheel/static/js/runtime-main.87df8d67.js",
     "runtime-main.js.map": "/spinning-wheel/static/js/runtime-main.87df8d67.js.map",
     "static/js/2.75821189.chunk.js": "/spinning-wheel/static/js/2.75821189.chunk.js",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.87df8d67.js",
     "static/js/2.75821189.chunk.js",
     "static/css/main.4a391a75.chunk.css",
-    "static/js/main.6ba5eed3.chunk.js"
+    "static/js/main.fd3f2501.chunk.js"
   ]
 }
