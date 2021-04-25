@@ -162,6 +162,20 @@ export default class Wheel extends React.Component {
     });
   }
 
+  getColor = (idx) => {
+    idx = idx + 1;
+    if (idx % 4 === 0) {
+        return '#65203A';
+    }
+    if (idx % 3 === 0) {
+        return '#551b31';
+    }
+    if (idx % 2 === 0) {
+        return '#742543';
+    }
+    return '#832A4B'
+  }
+
   render() {
     const { selectedItem } = this.state;
     const { items } = this.props;
@@ -187,7 +201,7 @@ export default class Wheel extends React.Component {
         <div ref={this.wheelRef} className={this.dragRef && this.dragRef.current && this.dragRef.current.data.isDragging ? `wheel spinning-drag`: `wheel ${spinning}`} style={this.dragRef && this.dragRef.current && this.dragRef.current.data.isDragging ?  {...wheelVars, ...dragVar} : wheelVars}>
           {items.map((item, index) => (
             <>
-            <div className="wheel-item" key={index} style={{ '--item-nb': index }}>
+            <div className="wheel-item" key={index} style={{ '--item-nb': index, '--color': this.getColor(index) }}>
               <div className="wheel-item-dot"></div>
               {item}
             </div>
