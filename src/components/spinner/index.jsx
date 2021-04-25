@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { message, Button, Space } from 'antd';
+import { message } from 'antd';
 import './styles.css';
 
 export default class Wheel extends React.Component {
