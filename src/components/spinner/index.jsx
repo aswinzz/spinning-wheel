@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { message, Button, Space } from 'antd';
 import './styles.css';
 
 export default class Wheel extends React.Component {
@@ -17,27 +18,25 @@ export default class Wheel extends React.Component {
 
   async componentDidMount() {
     this.powerRef.current.addEventListener('touchstart', this.eventHandler, { passive: true });
-    // this.powerRef.current.addEventListener('mousedown', this.eventHandler);
     this.powerRef.current.addEventListener('touchmove', this.eventHandler, { passive: false });
-    // this.powerRef.current.addEventListener('mousemove', this.eventHandler);
     this.powerRef.current.addEventListener('touchend', this.eventHandler);
-    // this.powerRef.current.addEventListener('mouseup', this.eventHandler);
-    this.doc = new GoogleSpreadsheet(process.env.REACT_APP_SPREADSHEET_ID);
-    await this.doc.useServiceAccountAuth({
-        client_email: process.env.REACT_APP_GAPI_EMAIL,
-        private_key: process.env.REACT_APP_GAPI_KEY.replace(/\\n/g, '\n')
-    });
-    await this.doc.loadInfo();
-    console.log(this.doc.title);
+    try {
+        this.doc = new GoogleSpreadsheet(process.env.REACT_APP_SPREADSHEET_ID);
+        await this.doc.useServiceAccountAuth({
+            client_email: process.env.REACT_APP_GAPI_EMAIL,
+            private_key: process.env.REACT_APP_GAPI_KEY.replace(/\\n/g, '\n')
+        });
+        await this.doc.loadInfo();
+    }
+    catch(e) {
+        message.error('Something went wrong');
+    }
   }
 
   componentWillUnmount() {
     this.powerRef.current.removeEventListener('touchstart', this.eventHandler);
-    // this.powerRef.current.removeEventListener('mousedown', this.eventHandler);
     this.powerRef.current.removeEventListener('touchmove', this.eventHandler);
-    // this.powerRef.current.removeEventListener('mousemove', this.eventHandler);
     this.powerRef.current.removeEventListener('touchend', this.eventHandler);
-    // this.powerRef.current.removeEventListener('mouseup', this.eventHandler);
   }
 
   eventHandler = (e) => {
@@ -68,9 +67,8 @@ export default class Wheel extends React.Component {
   
       const sheet = this.doc.sheetsById[0];
       const result = await sheet.addRow(row);
-      console.log('Data Saved')
     } catch (e) {
-      console.error('Error: ', e);
+        message.error('Something went wrong, Data was not saved in the database.');
     }
   };
 
@@ -107,7 +105,7 @@ export default class Wheel extends React.Component {
       '--nb-turn': `${Math.floor((this.state.speed + 50)/10)}`
     };
     const spinning = selectedItem !== null ? 'spinning' : '';
-    
+
     return (
     <div>
       <div className="wheel-container">

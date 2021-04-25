@@ -84,24 +84,45 @@ const Item = styled.div`
     flex: 1;
 `;
 
+const LoadingContainer = styled.div`
+    min-width: 358px;
+    max-width: 600px;
+    margin: 20px auto;
+`;
+
+const MainContainer = styled.div`
+    background-color: rgb(247, 246, 243);
+    max-width: 410px;
+    margin: 0 auto;
+`;
+
 export default class Home extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       reset: false,
+      loading: true,
       places: ['Better luck!', '2X Savings', '₹100 Cashback', '₹20 💸', '₹50 💸', '1.5X Savings', '2X Savings', '₹50 💸']
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({loading: false})
+    }, 1000);
   }
 
   onRefresh = () => {
     console.log('On Refresh')
     return new Promise((resolve, reject) => {
       this.setState({
-        reset: true
+        reset: true,
+        loading: true
       }, resolve);
       setTimeout(() => {
         this.setState({
-          reset: false
+          reset: false,
+          loading: false
         })
       }, 1000);
     })
@@ -110,8 +131,16 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div style={{backgroundColor: '#F7F6F3'}}>
+      <MainContainer>
         <PullToRefresh onRefresh={this.onRefresh}>
+        {this.state.loading ?
+          <LoadingContainer>
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+          </LoadingContainer>        
+        :
         <StyledContainer>
         <Container>
           <Item  style={{
@@ -134,9 +163,9 @@ export default class Home extends Component {
         <StyledHelp>
           Have a question? <font style={{color:'#F6C95D'}}>Get help</font>
         </StyledHelp>
-        </StyledContainer>
+        </StyledContainer>}
         </PullToRefresh>
-      </div>
+      </MainContainer>
     );
   }
 }
