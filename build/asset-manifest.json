@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/spinning-wheel/static/css/main.81da765d.chunk.css",
+    "main.css": "/spinning-wheel/static/css/main.7c659309.chunk.css",
     "main.js": "/spinning-wheel/static/js/main.c2d337b2.chunk.js",
     "main.js.map": "/spinning-wheel/static/js/main.c2d337b2.chunk.js.map",
     "runtime-main.js": "/spinning-wheel/static/js/runtime-main.87df8d67.js",
@@ -12,13 +12,13 @@
     "index.html": "/spinning-wheel/index.html",
     "service-worker.js": "/spinning-wheel/service-worker.js",
     "service-worker.js.map": "/spinning-wheel/service-worker.js.map",
-    "static/css/main.81da765d.chunk.css.map": "/spinning-wheel/static/css/main.81da765d.chunk.css.map",
+    "static/css/main.7c659309.chunk.css.map": "/spinning-wheel/static/css/main.7c659309.chunk.css.map",
     "static/js/2.75821189.chunk.js.LICENSE.txt": "/spinning-wheel/static/js/2.75821189.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.87df8d67.js",
     "static/js/2.75821189.chunk.js",
-    "static/css/main.81da765d.chunk.css",
+    "static/css/main.7c659309.chunk.css",
     "static/js/main.c2d337b2.chunk.js"
   ]
 }
