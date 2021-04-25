@@ -2,21 +2,70 @@ import React from 'react';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { message } from 'antd';
 import './styles.css';
+import { debounce } from '../../utils';
 
 export default class Wheel extends React.Component {
   powerRef;
+  wheelRef;
+  dragRef;
   constructor(props) {
     super(props);
     this.doc = null;
     this.state = {
       selectedItem: null,
-      speed: 15
+      speed: 15,
+      tempSpeed: 15,
+      dragDegree: 1,
+      lastPosition: 0
     };
     this.powerRef = React.createRef();
+    this.wheelRef = React.createRef();
+    this.dragRef = React.createRef();
     this.selectItem = this.selectItem.bind(this);
+    this.debouncedSelect = debounce(this.selectItem, 300);
+  }
+
+  onTouchStart = (e) => {
+      if (this.dragRef) {
+        this.setState({tempSpeed:1}, () => {
+            this.dragRef.current = {
+                data: { isDragging: true }
+            }
+        });
+      }
+  }
+
+  onTouchMove = (e) => {
+      if (this.dragRef && this.dragRef.current && this.dragRef.current.data && this.dragRef.current.data.isDragging && this.state.tempSpeed < 100) {
+          this.setState({
+            tempSpeed: this.state.tempSpeed + 0.4,
+            dragDegree: this.state.dragDegree + 1
+          });
+      }
+      if (this.dragRef && this.dragRef.current && this.dragRef.current.data && this.dragRef.current.data.isDragging && (this.state.tempSpeed + 0.4 >= 100 || this.state.tempSpeed >= 100)) {
+        this.onEnd(e);
+      }
+  }
+
+  onEnd = (e) => {
+    if (this.dragRef && this.dragRef.current && this.dragRef.current.data && this.dragRef.current.data.isDragging) {
+        this.debouncedSelect();
+    }
+    if (this.dragRef && this.dragRef.current && this.dragRef.current.data) {
+        this.dragRef.current.data = {
+            isDragging: false,
+        }
+    }
   }
 
   async componentDidMount() {
+    this.wheelRef.current.addEventListener('touchstart', this.onTouchStart, { passive: true });
+    this.wheelRef.current.addEventListener('mousedown', this.onTouchStart);
+    this.wheelRef.current.addEventListener('touchmove', this.onTouchMove, { passive: false });
+    this.wheelRef.current.addEventListener('mousemove', this.onTouchMove);
+    this.wheelRef.current.addEventListener('touchend', this.onEnd);
+    this.wheelRef.current.addEventListener('mouseup', this.onEnd);
+    document.body.addEventListener('mouseleave', this.onEnd);
     this.powerRef.current.addEventListener('touchstart', this.eventHandler, { passive: true });
     this.powerRef.current.addEventListener('touchmove', this.eventHandler, { passive: false });
     this.powerRef.current.addEventListener('touchend', this.eventHandler);
@@ -34,6 +83,13 @@ export default class Wheel extends React.Component {
   }
 
   componentWillUnmount() {
+    this.wheelRef.current.removeEventListener('touchstart', this.onTouchStart);
+    this.wheelRef.current.removeEventListener('mousedown', this.onTouchStart);
+    this.wheelRef.current.removeEventListener('touchmove', this.onTouchMove);
+    this.wheelRef.current.removeEventListener('mousemove', this.onTouchMove);
+    this.wheelRef.current.removeEventListener('touchend', this.onEnd);
+    this.wheelRef.current.removeEventListener('mouseup', this.onEnd);
+    document.body.removeEventListener('mouseleave', this.onEnd);
     this.powerRef.current.removeEventListener('touchstart', this.eventHandler);
     this.powerRef.current.removeEventListener('touchmove', this.eventHandler);
     this.powerRef.current.removeEventListener('touchend', this.eventHandler);
@@ -49,13 +105,21 @@ export default class Wheel extends React.Component {
       if (this.props.onSelectItem) {
         this.props.onSelectItem(selectedItem);
       }
-      this.setState({ selectedItem });
+      const lastPosition = 0;
+    //   const lastPosition = Math.floor((this.state.speed + 50)/10) * 360 + (-360 * selectedItem / this.props.items.length) - 90;
+      this.setState({ selectedItem, speed: this.state.tempSpeed, dragDegree: 1, lastPosition });
       if (selectedItem) {
+        console.log('selectedItem', this.props.items[selectedItem]);
+        this.dragRef.current = {
+            data: {
+                isDragging: false
+            }
+        }
         this.appendSpreadsheet({web_client: 'PWA', timestamp: new Date(), spin_result_index: selectedItem});
       }
     } else {
       this.setState({ selectedItem: null });
-      setTimeout(this.selectItem, 500);
+      setTimeout(this.debouncedSelect, 500);
     }
   }
 
@@ -87,7 +151,7 @@ export default class Wheel extends React.Component {
     const rect = this.powerRef.current.getBoundingClientRect();
     const max = rect.left + rect.width;
     const percantage = ((this.state.x - rect.left) / (max - rect.left)) * 100;
-    this.setState({speed: Math.floor(percantage)}, () => {
+    this.setState({speed: Math.floor(percantage), tempSpeed: Math.floor(percantage)}, () => {
         if (this.state.speed > 20) {
             this.selectItem();
         }
@@ -101,9 +165,14 @@ export default class Wheel extends React.Component {
     const wheelVars = {
       '--nb-item': items.length,
       '--selected-item': selectedItem,
-      '--spinning-duration': `${(150 - this.state.speed)/10}s`,
+      '--spinning-duration': `${(150 - Math.floor(this.state.speed))/10}s`,
       '--nb-turn': `${Math.floor((this.state.speed + 50)/10)}`
     };
+
+    const dragVar = {
+        '--drag-degree': this.state.dragDegree,
+        '--last-position': this.state.lastPosition
+    }
     const spinning = selectedItem !== null ? 'spinning' : '';
 
     return (
@@ -111,7 +180,7 @@ export default class Wheel extends React.Component {
       <div className="wheel-container">
         <div className="pointer-back"></div>
         <div className="pointer"></div>
-        <div className={`wheel ${spinning}`} style={wheelVars}>
+        <div ref={this.wheelRef} className={this.dragRef && this.dragRef.current && this.dragRef.current.data.isDragging ? `wheel spinning-drag`: `wheel ${spinning}`} style={this.dragRef && this.dragRef.current && this.dragRef.current.data.isDragging ?  {...wheelVars, ...dragVar} : wheelVars}>
           {items.map((item, index) => (
             <>
             <div className="wheel-item" key={index} style={{ '--item-nb': index }}>
@@ -122,9 +191,9 @@ export default class Wheel extends React.Component {
           ))}
         </div>
 
-        <div className='spin-button' onClick={this.selectItem}>Spin</div>
+        <div className='spin-button' onClick={this.debouncedSelect}>Spin</div>
       </div>
-      <div ref={this.powerRef} onClick={this.onPowerClick} onMouseMove={this._onMouseMove} style={{'--percentage': `${this.state.speed}%`}} className='speed-controller'>
+      <div ref={this.powerRef} onClick={this.onPowerClick} onMouseMove={this._onMouseMove} style={{'--percentage': `${this.state.tempSpeed}%`}} className='speed-controller'>
 
       </div>
 

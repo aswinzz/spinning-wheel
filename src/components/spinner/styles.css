@@ -12,6 +12,7 @@
     --nb-turn: 5;
     --spinning-duration: 10s;
     --reset-duration: 0.25s;
+    --drag-degree: 1;
   }
   
   .wheel-container {
@@ -97,6 +98,11 @@
   .wheel.spinning {
     transition: transform var(--spinning-duration);
     transform: rotate(calc(var(--nb-turn) * 360deg + (-360deg * var(--selected-item) / var(--nb-item, 1)) - 90deg));
+  }
+
+  .wheel.spinning-drag {
+    transition: transform 0.1s backwards;
+    transform: rotate(calc((var(--drag-degree) + var(--last-position)) * 1deg));
   }
 
   .spin-button {
