@@ -108,9 +108,10 @@ export default class Wheel extends React.Component {
       if (this.props.onSelectItem) {
         this.props.onSelectItem(selectedItem);
       }
-      const lastPosition = 0;
-    //   const lastPosition = Math.floor((this.state.speed + 50)/10) * 360 + (-360 * selectedItem / this.props.items.length) - 90;
-      this.setState({ selectedItem, speed: this.state.tempSpeed, dragDegree: 1, lastPosition });
+    //   const lastPosition = 0;
+      const lastPosition = Math.abs((360 / this.props.items.length) * (selectedItem));
+      console.log('lastPosition', lastPosition)
+      this.setState({ selectedItem, speed: this.state.tempSpeed, dragDegree: lastPosition });
       if (selectedItem) {
         console.log('selectedItem', this.props.items[selectedItem]);
         this.dragRef.current = {
